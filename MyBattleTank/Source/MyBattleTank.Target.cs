@@ -10,5 +10,11 @@ public class MyBattleTankTarget : TargetRules
 		Type = TargetType.Game;
 
 		ExtraModuleNames.AddRange( new string[] { "MyBattleTank" } );
-	}
+
+        //Non-Unity-mode
+        bUseUnityBuild = false;
+
+        //New standard
+        bUsePCHFiles = false;
+    }
 }

@@ -16,10 +16,10 @@ void AMyTankPlayerController::BeginPlay()
 	AMyTank* MyTank = GetControlledTank();
 	if (MyTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Possessed Tank: %s"), *MyTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("Player Controller possessed Tank: %s"), *MyTank->GetName());
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("No Tank possessed!"));
+		UE_LOG(LogTemp, Error, TEXT("No Player Tank possessed!"));
 	}
 }

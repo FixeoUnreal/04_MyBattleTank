@@ -53,13 +53,29 @@ void AMyTankPlayerController::AimTowardsCrosshair()
 // Get world location of line trace through crosshair, true if hits landscape
 bool AMyTankPlayerController::GetSightRayHitLocation(FVector& OutHitocation) const
 {
-	// Find the crosshair direction
+	// Find the crosshair direction in pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
-	UE_LOG(LogTemp, Warning, TEXT("Screen location of dot: %s"), *ScreenLocation.ToString());
+	//UE_LOG(LogTemp, Warning, TEXT("Screen location of dot: %s"), *ScreenLocation.ToString());
+
+	// "De-project" the screen position of the crosshair to a world direction
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("World direction: %s"), *LookDirection.ToString());
+	}
+	
 
 	return true;
+}
+
+bool AMyTankPlayerController::GetLookDirection(FVector2D &ScreenLocation, FVector& LookDirection) const
+{
+	FVector OutCameraWorldLocation;
+
+	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, OutCameraWorldLocation, LookDirection);
+	
 }
 

@@ -15,10 +15,12 @@ class MYBATTLETANK_API AMyTankAIController : public AAIController
 {
 	GENERATED_BODY()
 	
-public:
+private:
 
 	virtual void BeginPlay() override;
 	
 	AMyTank * GetControlledTank() const;
+
+	APawn* GetPlayerTankPawn() const;
 
 };

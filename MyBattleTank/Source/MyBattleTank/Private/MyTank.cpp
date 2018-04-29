@@ -40,7 +40,7 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyTank::AimAt(FVector HitLocation)
 {
-	TankAimingComponent->AimAt(HitLocation);
+	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void AMyTank::SetBarrelReference(UStaticMeshComponent * BarrelToSet)

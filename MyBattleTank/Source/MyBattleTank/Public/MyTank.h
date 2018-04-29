@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "MyBattleTank/Public/MyTankAimingComponent.h"
 #include "MyTank.generated.h"
 
 UCLASS()
@@ -12,14 +13,19 @@ class MYBATTLETANK_API AMyTank : public APawn
 	GENERATED_BODY()
 
 public:
+	void AimAt(FVector HitLocation);
+
+protected:
+	UMyTankAimingComponent * TankAimingComponent = nullptr;
+
+
+private:
 	// Sets default values for this pawn's properties
 	AMyTank();
 
-protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

@@ -3,12 +3,16 @@
 #include "MyBattleTank/Public/MyTank.h"
 
 
+
+
 // Sets default values
 AMyTank::AMyTank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	// No need to protect pointers as added at construction
+	TankAimingComponent = CreateDefaultSubobject<UMyTankAimingComponent>(FName("Aiming Component"));
 }
 
 // Called when the game starts or when spawned
@@ -32,3 +36,7 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
+void AMyTank::AimAt(FVector HitLocation)
+{
+	TankAimingComponent->AimAt(HitLocation);
+}

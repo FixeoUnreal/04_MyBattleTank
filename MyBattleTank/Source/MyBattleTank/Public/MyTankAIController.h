@@ -18,9 +18,11 @@ class MYBATTLETANK_API AMyTankAIController : public AAIController
 private:
 
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaTime) override;
 	
 	AMyTank * GetControlledTank() const;
 
-	APawn* GetPlayerTankPawn() const;
+	AMyTank* GetPlayerTank() const;
 
 };

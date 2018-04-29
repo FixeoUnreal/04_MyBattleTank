@@ -4,14 +4,16 @@
 #include "Engine/World.h"
 
 
+
+
 AMyTank* AMyTankAIController::GetControlledTank() const
 {
 	return Cast<AMyTank>(GetPawn());
 }
 
-APawn * AMyTankAIController::GetPlayerTankPawn() const
+AMyTank * AMyTankAIController::GetPlayerTank() const
 {
-	return GetWorld()->GetFirstPlayerController()->GetPawn();
+	return Cast<AMyTank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 }
 
 void AMyTankAIController::BeginPlay()
@@ -28,7 +30,7 @@ void AMyTankAIController::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("No AI Tank possessed!"));
 	}*/
 
-	AMyTank* PLayerTank = Cast<AMyTank>(GetPlayerTankPawn());
+	AMyTank* PLayerTank =GetPlayerTank();
 	if (PLayerTank)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController found player tank: %s"), *PLayerTank->GetName());
@@ -39,5 +41,21 @@ void AMyTankAIController::BeginPlay()
 	}
 }
 
+void AMyTankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
 
+	AMyTank* PLayerTank = GetPlayerTank();
+	AMyTank* ControlledTank = GetControlledTank();
+	
+	if (PLayerTank && ControlledTank)
+	{
+		// TODO Move towards player
+		
+		// aim towards player
+		ControlledTank->AimAt(PLayerTank->GetActorLocation());
+
+		// fire if ready
+	}
+}
 

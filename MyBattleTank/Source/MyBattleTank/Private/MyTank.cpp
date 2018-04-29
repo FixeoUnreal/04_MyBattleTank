@@ -5,6 +5,8 @@
 
 
 
+
+
 // Sets default values
 AMyTank::AMyTank()
 {
@@ -39,4 +41,9 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AMyTank::AimAt(FVector HitLocation)
 {
 	TankAimingComponent->AimAt(HitLocation);
+}
+
+void AMyTank::SetBarrelReference(UStaticMeshComponent * BarrelToSet)
+{
+	TankAimingComponent->SetBarrelReference(BarrelToSet);
 }

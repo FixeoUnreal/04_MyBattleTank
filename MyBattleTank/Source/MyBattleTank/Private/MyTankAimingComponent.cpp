@@ -69,6 +69,6 @@ void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	
 	
-	Barrel->Elevate(5); // remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch); // remove magic number
 }
 

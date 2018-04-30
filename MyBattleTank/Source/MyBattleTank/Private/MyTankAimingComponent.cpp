@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 #include "MyBattleTank/Public/MyTankBarrel.h"
+#include "MyBattleTank/Public/MyTankTurret.h"
 
 
 // Sets default values for this component's properties
@@ -12,7 +13,7 @@ UMyTankAimingComponent::UMyTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -20,14 +21,21 @@ UMyTankAimingComponent::UMyTankAimingComponent()
 
 void UMyTankAimingComponent::SetBarrelReference(UMyTankBarrel * BarrelToSet)
 {
+	if (!BarrelToSet) { return; }
 	Barrel = BarrelToSet;
+}
+
+void UMyTankAimingComponent::SetTurretReference(UMyTankTurret * TurretToSet)
+{
+	if (!TurretToSet) { return; }
+	Turret = TurretToSet;
 }
 
 void UMyTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	auto OurTankName = GetOwner()->GetName();
 	//auto BarrelLocation = Barrel->GetComponentLocation();
-	if (!Barrel) { return; }
+	if (!Barrel || !Turret) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -50,25 +58,28 @@ void UMyTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *OurTankName, *AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution found"), Time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution found"), Time);
 	}
 	// If no solution found do nothing
 	else
 	{
 		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: No Aim Solution found!"), Time);
+		//UE_LOG(LogTemp, Warning, TEXT("%f: No Aim Solution found!"), Time);
 	}
 }
 
 void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	// Work-out difference between current barrel rotation and AimDirection
+		// Work-out difference between current barrel rotation and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	
-	
-	Barrel->Elevate(DeltaRotator.Pitch); // remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch); 
+	if (FMath::Abs(DeltaRotator.Yaw) > 180.F)
+	{
+		DeltaRotator.Yaw *= -1.F;
+	}
+	Turret->Rotate(DeltaRotator.Yaw);
 }
 

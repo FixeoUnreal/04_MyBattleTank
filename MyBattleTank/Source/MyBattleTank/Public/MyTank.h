@@ -7,6 +7,7 @@
 #include "MyTank.generated.h"
 
 class UMyTankBarrel;
+class UMyTankTurret;
 class UMyTankAimingComponent;
 
 UCLASS()
@@ -19,6 +20,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UMyTankBarrel* BarrelToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UMyTankTurret * TurretToSet);
 
 protected:
 	UMyTankAimingComponent * TankAimingComponent = nullptr;
@@ -35,6 +39,6 @@ private:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
-	float LaunchSpeed = 100000; // TODO find sensible starting value 
+	float LaunchSpeed = 4000; 
 	
 };

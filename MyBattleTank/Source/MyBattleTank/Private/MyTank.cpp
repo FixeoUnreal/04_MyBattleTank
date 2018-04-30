@@ -3,6 +3,7 @@
 #include "MyBattleTank/Public/MyTank.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
 #include "MyBattleTank/Public/MyTankBarrel.h"
+#include "MyBattleTank/Public/MyTankTurret.h"
 
 
 
@@ -40,4 +41,9 @@ void AMyTank::AimAt(FVector HitLocation)
 void AMyTank::SetBarrelReference(UMyTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+}
+
+void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
+{
+	TankAimingComponent->SetTurretReference(TurretToSet);
 }

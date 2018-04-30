@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MyBattleTank/Public/MyTank.h"
-
+#include "MyBattleTank/Public/MyTankAimingComponent.h"
+#include "MyBattleTank/Public/MyTankBarrel.h"
 
 
 

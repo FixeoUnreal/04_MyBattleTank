@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "MyBattleTank/Public/MyTankAimingComponent.h"
 #include "MyTank.generated.h"
 
 class UMyTankBarrel;
+class UMyTankAimingComponent;
 
 UCLASS()
 class MYBATTLETANK_API AMyTank : public APawn

@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Components/StaticMeshComponent.h"
 #include "MyTankAimingComponent.generated.h"
 
 // Forward declaration

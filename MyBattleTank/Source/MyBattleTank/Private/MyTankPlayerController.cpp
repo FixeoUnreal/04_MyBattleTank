@@ -3,6 +3,7 @@
 
 #include "MyBattleTank/Public/MyTankPlayerController.h"
 #include "Engine/World.h"
+#include "MyBattleTank/Public/MyTank.h"
 
 
 #define OUT

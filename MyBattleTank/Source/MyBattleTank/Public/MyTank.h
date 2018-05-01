@@ -9,6 +9,7 @@
 class UMyTankBarrel;
 class UMyTankTurret;
 class UMyTankAimingComponent;
+class AMyProjectile;
 
 UCLASS()
 class MYBATTLETANK_API AMyTank : public APawn
@@ -43,5 +44,11 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000; 
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AMyProjectile> ProjectileBlueprint;
+
+	// Local barrel reference for spawning projectiles
+	UMyTankBarrel* Barrel = nullptr;
 	
 };

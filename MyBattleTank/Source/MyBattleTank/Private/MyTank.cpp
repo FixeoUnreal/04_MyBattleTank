@@ -4,6 +4,8 @@
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
 #include "MyBattleTank/Public/MyTankBarrel.h"
 #include "MyBattleTank/Public/MyTankTurret.h"
+#include "MyBattleTank/Public/MyProjectile.h"
+#include "Engine/World.h"
 
 
 
@@ -42,6 +44,7 @@ void AMyTank::AimAt(FVector HitLocation)
 void AMyTank::SetBarrelReference(UMyTankBarrel * BarrelToSet)
 {
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
+	Barrel = BarrelToSet;
 }
 
 void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
@@ -51,5 +54,14 @@ void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
 
 void AMyTank::Fire()
 {
+	
+	if (!Barrel) { return; }
 	UE_LOG(LogTemp, Warning, TEXT("Tank %s fired!"), *GetName());
+	// Spawn a projectile at the socket location from the barrel
+	FName SocketName = FName("Projectile");
+	GetWorld()->SpawnActor<AMyProjectile>(
+		ProjectileBlueprint,
+		Barrel->GetSocketLocation(SocketName),
+		Barrel->GetSocketRotation(SocketName)
+	);
 }

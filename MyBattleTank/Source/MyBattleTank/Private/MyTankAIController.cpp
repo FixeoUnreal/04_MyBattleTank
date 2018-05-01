@@ -5,49 +5,17 @@
 #include "MyBattleTank/Public/MyTank.h"
 
 
-
-
-AMyTank* AMyTankAIController::GetControlledTank() const
-{
-	return Cast<AMyTank>(GetPawn());
-}
-
-AMyTank * AMyTankAIController::GetPlayerTank() const
-{
-	return Cast<AMyTank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-}
-
 void AMyTankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	/*AMyTank* ControlledTank = GetControlledTank();
-	if (ControlledTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AI Controller possessed tank: %s"), *ControlledTank->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("No AI Tank possessed!"));
-	}*/
-
-	AMyTank* PLayerTank =GetPlayerTank();
-	if (PLayerTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AIController found player tank: %s"), *PLayerTank->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("AIController can not find player tank!"));
-	}
 }
 
 void AMyTankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	AMyTank* PLayerTank = GetPlayerTank();
-	AMyTank* ControlledTank = GetControlledTank();
+	AMyTank* PLayerTank = Cast<AMyTank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	AMyTank* ControlledTank = Cast<AMyTank>(GetPawn());
 	
 	if (PLayerTank && ControlledTank)
 	{
@@ -57,6 +25,7 @@ void AMyTankAIController::Tick(float DeltaTime)
 		ControlledTank->AimAt(PLayerTank->GetActorLocation());
 
 		// fire if ready
+		ControlledTank->Fire(); // TPDP don't fire every frame
 	}
 }
 

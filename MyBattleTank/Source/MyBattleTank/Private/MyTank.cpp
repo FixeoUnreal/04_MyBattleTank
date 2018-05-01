@@ -54,16 +54,21 @@ void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
 
 void AMyTank::Fire()
 {
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimesInSeconds;
 	
-	if (!Barrel) { return; }
-	
-	// Spawn a projectile at the socket location from the barrel
-	FName SocketName = FName("Projectile");
-	auto Projectile = GetWorld()->SpawnActor<AMyProjectile>(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(SocketName),
-		Barrel->GetSocketRotation(SocketName)
-	);
+	if (Barrel && isReloaded) 
+	{
+		// Spawn a projectile at the socket location from the barrel
+		FName SocketName = FName("Projectile");
+		auto Projectile = GetWorld()->SpawnActor<AMyProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(SocketName),
+			Barrel->GetSocketRotation(SocketName)
+			);
 
-	Projectile->LaunchProjectile(LaunchSpeed);
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+	
+	
 }

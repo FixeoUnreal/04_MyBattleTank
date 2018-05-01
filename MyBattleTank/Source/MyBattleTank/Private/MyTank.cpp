@@ -56,12 +56,14 @@ void AMyTank::Fire()
 {
 	
 	if (!Barrel) { return; }
-	UE_LOG(LogTemp, Warning, TEXT("Tank %s fired!"), *GetName());
+	
 	// Spawn a projectile at the socket location from the barrel
 	FName SocketName = FName("Projectile");
-	GetWorld()->SpawnActor<AMyProjectile>(
+	auto Projectile = GetWorld()->SpawnActor<AMyProjectile>(
 		ProjectileBlueprint,
 		Barrel->GetSocketLocation(SocketName),
 		Barrel->GetSocketRotation(SocketName)
 	);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }

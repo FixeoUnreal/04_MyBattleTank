@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UMyTankTurret * TurretToSet);
 
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	void Fire();
+
 protected:
 	UMyTankAimingComponent * TankAimingComponent = nullptr;
 

@@ -31,6 +31,7 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+
 }
 
 void AMyTank::AimAt(FVector HitLocation)
@@ -46,4 +47,9 @@ void AMyTank::SetBarrelReference(UMyTankBarrel * BarrelToSet)
 void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
+}
+
+void AMyTank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Tank %s fired!"), *GetName());
 }

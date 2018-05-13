@@ -20,7 +20,6 @@ AMyTank::AMyTank()
 
 	// No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UMyTankAimingComponent>(FName("Aiming Component"));
-	TankMovemenComponent = CreateDefaultSubobject<UMyTankMovementComponent>(FName("Movement Component"));
 
 }
 

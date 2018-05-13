@@ -18,16 +18,6 @@ void AMyTankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController Begin PLay!"));
-	AMyTank* MyTank = GetControlledTank();
-	if (MyTank)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller possessed Tank: %s"), *MyTank->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("No Player Tank possessed!"));
-	}
 }
 
 void AMyTankPlayerController::Tick(float DeltaTime)
@@ -61,13 +51,11 @@ bool AMyTankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 
 	auto ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
-	//UE_LOG(LogTemp, Warning, TEXT("Screen location of dot: %s"), *ScreenLocation.ToString());
 
 	// "De-project" the screen position of the crosshair to a world direction
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("World direction: %s"), *LookDirection.ToString());
 
 		// Line-trace along that LookDirection and see what we hit (up to max range)
 		if (GetLookVectorHitLocation(LookDirection, HitLocation))

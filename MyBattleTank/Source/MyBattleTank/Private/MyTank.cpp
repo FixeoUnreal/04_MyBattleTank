@@ -5,6 +5,7 @@
 #include "MyBattleTank/Public/MyTankBarrel.h"
 #include "MyBattleTank/Public/MyTankTurret.h"
 #include "MyBattleTank/Public/MyProjectile.h"
+#include "MyBattleTank/Public/MyTankMovementComponent.h"
 #include "Engine/World.h"
 
 
@@ -19,6 +20,8 @@ AMyTank::AMyTank()
 
 	// No need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UMyTankAimingComponent>(FName("Aiming Component"));
+	TankMovemenComponent = CreateDefaultSubobject<UMyTankMovementComponent>(FName("Movement Component"));
+
 }
 
 // Called when the game starts or when spawned

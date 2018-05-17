@@ -19,7 +19,8 @@ void AMyTankAIController::Tick(float DeltaTime)
 	
 	if (PLayerTank && ControlledTank)
 	{
-		// TODO Move towards player
+		// Move towards player
+		MoveToActor(PLayerTank, AcceptanceRadius); // TODO check acceptance radius
 		
 		// aim towards player
 		ControlledTank->AimAt(PLayerTank->GetActorLocation());

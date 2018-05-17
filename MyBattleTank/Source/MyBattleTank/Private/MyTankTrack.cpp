@@ -7,9 +7,6 @@
 
 void UMyTankTrack::SetThrottle(float Throttle)
 {
-	
-
-	// TODO clamp actual throttle value, so player can't overdrive
 	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
@@ -21,5 +18,4 @@ void UMyTankTrack::SetThrottle(float Throttle)
 	{
 		UE_LOG(LogTemp, Error, TEXT("No root tank found!"));
 	}
-
 }

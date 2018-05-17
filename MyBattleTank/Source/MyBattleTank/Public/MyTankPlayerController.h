@@ -15,9 +15,12 @@ class MYBATTLETANK_API AMyTankPlayerController : public APlayerController
 {
 	GENERATED_BODY()
 	
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	AMyTank * GetControlledTank() const;
 	
 private:
-	AMyTank * GetControlledTank() const;
+	
 
 	virtual void BeginPlay() override;
 

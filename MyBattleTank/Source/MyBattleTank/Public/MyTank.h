@@ -20,10 +20,10 @@ class MYBATTLETANK_API AMyTank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetBarrelReference(UMyTankBarrel* BarrelToSet);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void SetTurretReference(UMyTankTurret * TurretToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Action")
@@ -48,7 +48,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000; 
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AMyProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")

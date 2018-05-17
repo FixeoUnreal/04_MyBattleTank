@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright FIXEO
 
 #include "MyBattleTank/Public/MyTankMovementComponent.h"
 #include "MyBattleTank/Public/MyTankTrack.h"
@@ -24,8 +24,6 @@ void UMyTankMovementComponent::Initialise(UMyTankTrack * LeftTrackToSet, UMyTank
 {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
-
-	//TODO prevent double speed due to dual control use
 }
 
 void UMyTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)

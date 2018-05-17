@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright FIXEO
 
 #pragma once
 
@@ -17,19 +17,21 @@ class MYBATTLETANK_API UMyTankMovementComponent : public UNavMovementComponent
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendMoveForward(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UMyTankTrack* LeftTrackToSet, UMyTankTrack* RightTrackToSet);
 
-	//TODO check best protection
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+	
 	
 private:
 	UMyTankTrack * LeftTrack = nullptr;
 	UMyTankTrack * RightTrack = nullptr;
+
+	// Call from the pathfinding logic by the AI controllers
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 };

@@ -20,12 +20,6 @@ class MYBATTLETANK_API AMyTank : public APawn
 public:
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetBarrelReference(UMyTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetTurretReference(UMyTankTurret * TurretToSet);
-
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	void Fire();
 

@@ -17,10 +17,6 @@ AMyTank::AMyTank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
-
-	// No need to protect pointers as added at construction
-	TankAimingComponent = CreateDefaultSubobject<UMyTankAimingComponent>(FName("Aiming Component"));
-
 }
 
 // Called when the game starts or when spawned
@@ -41,17 +37,6 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AMyTank::AimAt(FVector HitLocation)
 {
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
-}
-
-void AMyTank::SetBarrelReference(UMyTankBarrel * BarrelToSet)
-{
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
-	Barrel = BarrelToSet;
-}
-
-void AMyTank::SetTurretReference(UMyTankTurret * TurretToSet)
-{
-	TankAimingComponent->SetTurretReference(TurretToSet);
 }
 
 void AMyTank::Fire()

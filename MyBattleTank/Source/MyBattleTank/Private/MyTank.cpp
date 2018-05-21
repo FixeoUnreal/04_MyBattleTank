@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright FIXEO
 
 #include "MyBattleTank/Public/MyTank.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
@@ -36,6 +36,7 @@ void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AMyTank::AimAt(FVector HitLocation)
 {
+	if (!TankAimingComponent) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 

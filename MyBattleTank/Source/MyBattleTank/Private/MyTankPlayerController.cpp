@@ -4,6 +4,7 @@
 #include "MyBattleTank/Public/MyTankPlayerController.h"
 #include "Engine/World.h"
 #include "MyBattleTank/Public/MyTank.h"
+#include "MyBattleTank/Public/MyTankAimingComponent.h"
 
 
 #define OUT
@@ -17,7 +18,15 @@ AMyTank* AMyTankPlayerController::GetControlledTank() const
 void AMyTankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
+	auto AimingComponent = GetControlledTank()->FindComponentByClass<UMyTankAimingComponent>();
+	if(AimingComponent)
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Player controller can't find aiming component at BeginPLay"));
+	}
 }
 
 void AMyTankPlayerController::Tick(float DeltaTime)

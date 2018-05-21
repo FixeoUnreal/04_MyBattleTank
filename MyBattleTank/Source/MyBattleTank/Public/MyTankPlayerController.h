@@ -1,14 +1,16 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright FIXEO
 
 #pragma once
 
 #include "CoreMinimal.h"
-#include "MyBattleTank/Public/MyTank.h"
 #include "GameFramework/PlayerController.h"
 #include "MyTankPlayerController.generated.h"
 
+class AMyTank;
+class UMyTankAimingComponent;
+
 /**
- * 
+ * Responsible for helping the player aim
  */
 UCLASS()
 class MYBATTLETANK_API AMyTankPlayerController : public APlayerController
@@ -18,6 +20,9 @@ class MYBATTLETANK_API AMyTankPlayerController : public APlayerController
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	AMyTank * GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UMyTankAimingComponent* AimCompRed);
 	
 private:
 	

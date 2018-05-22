@@ -18,7 +18,7 @@ UMyTankAimingComponent::UMyTankAimingComponent()
 	// ...
 }
 
-void UMyTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UMyTankAimingComponent::AimAt(FVector HitLocation)
 {
 	auto OurTankName = GetOwner()->GetName();
 	//auto BarrelLocation = Barrel->GetComponentLocation();

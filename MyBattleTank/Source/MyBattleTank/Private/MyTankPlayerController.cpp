@@ -3,22 +3,16 @@
 
 #include "MyBattleTank/Public/MyTankPlayerController.h"
 #include "Engine/World.h"
-#include "MyBattleTank/Public/MyTank.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
 
 
 #define OUT
 
 
-AMyTank* AMyTankPlayerController::GetControlledTank() const
-{
-	return Cast<AMyTank>(GetPawn());
-}
-
 void AMyTankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UMyTankAimingComponent>();
+	auto AimingComponent = GetPawn()->FindComponentByClass<UMyTankAimingComponent>();
 	if(ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
@@ -34,14 +28,15 @@ void AMyTankPlayerController::Tick(float DeltaTime)
 
 void AMyTankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	if (!GetPawn()) { return; }
 
 	FVector HitLocation; // Out parameter
+	auto AimingComponent = GetPawn()->FindComponentByClass<UMyTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return; }
 
 	if (GetSightRayHitLocation(HitLocation)) // has "side-effect": is going to line trace
 	{
-		GetControlledTank()->AimAt(HitLocation);
-
+		AimingComponent->AimAt(HitLocation);
 		// Tell controlled tank to aim at this point
 	}
 

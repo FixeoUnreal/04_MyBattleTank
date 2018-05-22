@@ -29,7 +29,7 @@ public:
 	// Sets default values for this component's properties
 	UMyTankAimingComponent();
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UMyTankBarrel * BarrelToSet, UMyTankTurret * TurretToSet);
@@ -42,6 +42,9 @@ private:
 	UMyTankBarrel * Barrel = nullptr;
 
 	UMyTankTurret * Turret = nullptr;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 
 	void MoveBarrelTowards(FVector AimDirection);
 };

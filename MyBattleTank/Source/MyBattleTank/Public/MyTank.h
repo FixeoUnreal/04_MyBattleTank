@@ -8,7 +8,6 @@
 
 class UMyTankBarrel;
 class UMyTankTurret;
-class UMyTankAimingComponent;
 class AMyProjectile;
 
 UCLASS()
@@ -17,14 +16,11 @@ class MYBATTLETANK_API AMyTank : public APawn
 	GENERATED_BODY()
 
 public:
-	void AimAt(FVector HitLocation);
-
 	UFUNCTION(BlueprintCallable, Category = "Action")
 	void Fire();
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-	UMyTankAimingComponent * TankAimingComponent = nullptr;
+	
+
 
 private:
 	// Sets default values for this pawn's properties
@@ -36,9 +32,6 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float LaunchSpeed = 4000; 
-
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AMyProjectile> ProjectileBlueprint;
 
@@ -49,5 +42,8 @@ private:
 	UMyTankBarrel* Barrel = nullptr;
 
 	double LastFireTime = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float LaunchSpeed = 4000;
 	
 };

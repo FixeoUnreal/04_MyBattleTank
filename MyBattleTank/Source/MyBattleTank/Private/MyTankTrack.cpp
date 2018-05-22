@@ -14,8 +14,4 @@ void UMyTankTrack::SetThrottle(float Throttle)
 	{
 		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("No root tank found!"));
-	}
 }

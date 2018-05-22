@@ -46,10 +46,6 @@ void UMyTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		auto Time = GetWorld()->GetTimeSeconds();
 	}
 	// If no solution found do nothing
-	else
-	{
-		auto Time = GetWorld()->GetTimeSeconds();
-	}
 }
 
 void UMyTankAimingComponent::Initialise(UMyTankBarrel * BarrelToSet, UMyTankTurret * TurretToSet)

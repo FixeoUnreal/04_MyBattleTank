@@ -29,7 +29,7 @@ void AMyTank::BeginPlay()
 void AMyTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-
+	TankAimingComponent = FindComponentByClass<UMyTankAimingComponent>();
 
 }
 

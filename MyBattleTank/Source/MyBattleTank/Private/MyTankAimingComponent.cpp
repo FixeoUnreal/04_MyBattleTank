@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "MyBattleTank/Public/MyTankBarrel.h"
 #include "MyBattleTank/Public/MyTankTurret.h"
+#include "MyBattleTank/Public/MyProjectile.h"
 
 
 // Sets default values for this component's properties
@@ -52,6 +53,26 @@ void UMyTankAimingComponent::Initialise(UMyTankBarrel * BarrelToSet, UMyTankTurr
 {
 	Barrel = BarrelToSet;
 	Turret = TurretToSet;
+}
+
+void UMyTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimesInSeconds;
+
+	if (isReloaded)
+	{
+		// Spawn a projectile at the socket location from the barrel
+		FName SocketName = FName("Projectile");
+		auto Projectile = GetWorld()->SpawnActor<AMyProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(SocketName),
+			Barrel->GetSocketRotation(SocketName)
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
 
 void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirection)

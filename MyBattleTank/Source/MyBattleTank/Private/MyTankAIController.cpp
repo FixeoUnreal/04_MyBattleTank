@@ -2,7 +2,6 @@
 
 #include "MyBattleTank/Public/MyTankAIController.h"
 #include "Engine/World.h"
-#include "MyBattleTank/Public/MyTank.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
 
 
@@ -30,7 +29,7 @@ void AMyTankAIController::Tick(float DeltaTime)
 		ControlledAimComp->AimAt(PLayerTank->GetActorLocation());
 
 		// fire if ready
-		//ControlledTank->Fire(); // TPDP don't fire every frame
+		ControlledAimComp->Fire(); // TPDP don't fire every frame
 	}
 }
 

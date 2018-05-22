@@ -39,7 +39,6 @@ void AMyTankPlayerController::AimTowardsCrosshair()
 		AimingComponent->AimAt(HitLocation);
 		// Tell controlled tank to aim at this point
 	}
-
 }
 
 // Get world location of line trace through crosshair, true if hits landscape
@@ -55,23 +54,19 @@ bool AMyTankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-
 		// Line-trace along that LookDirection and see what we hit (up to max range)
 		if (GetLookVectorHitLocation(LookDirection, HitLocation))
 		{
 			
 		}
 	}
-
 	return true;
 }
 
 bool AMyTankPlayerController::GetLookDirection(FVector2D &ScreenLocation, FVector& LookDirection) const
 {
 	FVector OutCameraWorldLocation;
-
 	return DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, OutCameraWorldLocation, LookDirection);
-	
 }
 
 bool AMyTankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const

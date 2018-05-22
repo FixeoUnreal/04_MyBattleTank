@@ -22,7 +22,7 @@ void UMyTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 {
 	auto OurTankName = GetOwner()->GetName();
 	//auto BarrelLocation = Barrel->GetComponentLocation();
-	if (!Barrel || !Turret) { return; }
+	if (!ensure(Barrel && Turret)) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -61,7 +61,7 @@ void UMyTankAimingComponent::Initialise(UMyTankBarrel * BarrelToSet, UMyTankTurr
 void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
 	// Work-out difference between current barrel rotation and AimDirection
-	if (!Barrel || !Turret) { return; }
+	if (!ensure(Barrel && Turret)) { return; }
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;

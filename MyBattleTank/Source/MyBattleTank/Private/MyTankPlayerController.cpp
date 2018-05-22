@@ -19,7 +19,7 @@ void AMyTankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	auto AimingComponent = GetControlledTank()->FindComponentByClass<UMyTankAimingComponent>();
-	if(AimingComponent)
+	if(ensure(AimingComponent))
 	{
 		FoundAimingComponent(AimingComponent);
 	}

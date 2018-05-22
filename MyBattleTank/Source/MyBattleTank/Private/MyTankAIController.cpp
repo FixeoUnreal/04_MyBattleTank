@@ -17,7 +17,7 @@ void AMyTankAIController::Tick(float DeltaTime)
 	AMyTank* PLayerTank = Cast<AMyTank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	AMyTank* ControlledTank = Cast<AMyTank>(GetPawn());
 	
-	if (PLayerTank && ControlledTank)
+	if (ensure(PLayerTank && ControlledTank))
 	{
 		// Move towards player
 		MoveToActor(PLayerTank, AcceptanceRadius); // TODO check acceptance radius

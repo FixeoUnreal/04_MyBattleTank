@@ -99,8 +99,6 @@ void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirectionParam)
 
 void UMyTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
-	UE_LOG(LogTemp, Warning, TEXT("it ticks!"));
-
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimesInSeconds)
 	{
 		FiringState = EFiringState::Reloading;

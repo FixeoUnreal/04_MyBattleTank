@@ -28,7 +28,7 @@ void AMyTankPlayerController::Tick(float DeltaTime)
 
 void AMyTankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetPawn()) { return; }
+	if (!GetPawn()) { return; } //e.g. if not possessing
 
 	FVector HitLocation; // Out parameter
 	auto AimingComponent = GetPawn()->FindComponentByClass<UMyTankAimingComponent>();

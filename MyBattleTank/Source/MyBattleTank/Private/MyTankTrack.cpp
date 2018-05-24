@@ -2,21 +2,28 @@
 
 #include "MyBattleTank/Public/MyTankTrack.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
 
 
 
 UMyTankTrack::UMyTankTrack()
 {
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UMyTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+void UMyTankTrack::BeginPlay()
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	//Super::BeginPlay();
+	OnComponentHit.AddDynamic(this, &UMyTankTrack::OnHit);
+}
+
+void UMyTankTrack::ApplySidewaysForce()
+{
 	// Calculate the slippage speed
 	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 
 	// Work out the required acceleration this frame to correct
+	auto DeltaTime = GetWorld()->GetDeltaSeconds();
 	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
 
 	// Calculate and apply sideways force
@@ -25,13 +32,25 @@ void UMyTankTrack::TickComponent(float DeltaTime, enum ELevelTick TickType, FAct
 	TankRoot->AddForce(CorrectForce);
 }
 
-void UMyTankTrack::SetThrottle(float Throttle)
+void UMyTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
 {
-	auto ForceApplied = GetForwardVector() * Throttle * TrackMaxDrivingForce;
+	DriveTrack();
+	ApplySidewaysForce();
+	CurrentThrottle = 0;
+}
+
+void UMyTankTrack::DriveTrack()
+{
+	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
 	auto ForceLocation = GetComponentLocation();
 	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
 	if (ensure(TankRoot))
 	{
 		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
 	}
+}
+
+void UMyTankTrack::SetThrottle(float Throttle)
+{
+	CurrentThrottle = FMath::Clamp<float>((CurrentThrottle + Throttle), -1, 1);
 }

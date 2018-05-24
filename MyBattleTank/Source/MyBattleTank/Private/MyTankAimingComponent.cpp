@@ -90,6 +90,7 @@ void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirectionParam)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch); 
+	//Always yaw the shortest way
 	if (FMath::Abs(DeltaRotator.Yaw) > 180.F)
 	{
 		DeltaRotator.Yaw *= -1.F;

@@ -34,10 +34,10 @@ void AMyTankPlayerController::AimTowardsCrosshair()
 	auto AimingComponent = GetPawn()->FindComponentByClass<UMyTankAimingComponent>();
 	if (!ensure(AimingComponent)) { return; }
 
-	if (GetSightRayHitLocation(HitLocation)) // has "side-effect": is going to line trace
+	bool bGotHitLocation = GetSightRayHitLocation(HitLocation);
+	if (bGotHitLocation) // has "side-effect": is going to line trace
 	{
 		AimingComponent->AimAt(HitLocation);
-		// Tell controlled tank to aim at this point
 	}
 }
 
@@ -57,10 +57,10 @@ bool AMyTankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 		// Line-trace along that LookDirection and see what we hit (up to max range)
 		if (GetLookVectorHitLocation(LookDirection, HitLocation))
 		{
-			
+			return GetLookVectorHitLocation(LookDirection, HitLocation);
 		}
 	}
-	return true;
+	return false;
 }
 
 bool AMyTankPlayerController::GetLookDirection(FVector2D &ScreenLocation, FVector& LookDirection) const

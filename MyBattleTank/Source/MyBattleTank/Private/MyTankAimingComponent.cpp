@@ -75,6 +75,11 @@ void UMyTankAimingComponent::Fire()
 	}
 }
 
+EFiringState UMyTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
+}
+
 void UMyTankAimingComponent::BeginPlay()
 {
 	// So first fire is after initial reload

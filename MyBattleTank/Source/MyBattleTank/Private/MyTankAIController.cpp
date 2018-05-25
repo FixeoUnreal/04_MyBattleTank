@@ -29,7 +29,10 @@ void AMyTankAIController::Tick(float DeltaTime)
 		ControlledAimComp->AimAt(PLayerTank->GetActorLocation());
 
 		// fire if ready
-		ControlledAimComp->Fire(); // TPDP don't fire every frame
+		if(ControlledAimComp->GetFiringState()  == EFiringState::Locked)
+		{
+			ControlledAimComp->Fire(); // TPDP don't fire every frame
+		}
 	}
 }
 

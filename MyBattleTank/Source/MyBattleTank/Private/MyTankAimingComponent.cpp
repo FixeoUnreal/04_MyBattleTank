@@ -57,7 +57,7 @@ void UMyTankAimingComponent::Initialise(UMyTankBarrel * BarrelToSet, UMyTankTurr
 
 void UMyTankAimingComponent::Fire()
 {
-	if (FiringState != EFiringState::Reloading)
+	if (FiringState != EFiringState::Reloading && AmmoNumber > 0)
 	{
 		if (!ensure(Barrel)) { return; }
 		if(!ensure(ProjectileBlueprint)) { return; }
@@ -72,6 +72,11 @@ void UMyTankAimingComponent::Fire()
 
 		Projectile->LaunchProjectile(LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
+		AmmoNumber--;
+	}
+	if (AmmoNumber <= 0)
+	{
+		FiringState = EFiringState::NoAmmo;
 	}
 }
 
@@ -105,6 +110,7 @@ void UMyTankAimingComponent::MoveBarrelTowards(FVector AimDirectionParam)
 
 void UMyTankAimingComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
+	if (FiringState == EFiringState::NoAmmo) { return; }
 	if ((FPlatformTime::Seconds() - LastFireTime) < ReloadTimesInSeconds)
 	{
 		FiringState = EFiringState::Reloading;

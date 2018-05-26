@@ -12,7 +12,8 @@ enum class EFiringState : uint8
 {
 	Aiming,
 	Reloading,
-	Locked
+	Locked, 
+	NoAmmo
 };
 
 // Forward declaration
@@ -44,6 +45,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "State")
+	uint8 AmmoNumber = 2;
+
 	virtual void BeginPlay() override;
 
 private:
@@ -58,7 +62,7 @@ private:
 	TSubclassOf<AMyProjectile> ProjectileBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimesInSeconds = 20;
+	float ReloadTimesInSeconds = 3;
 
 	double LastFireTime = 0;
 

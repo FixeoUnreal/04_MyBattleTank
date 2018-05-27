@@ -45,8 +45,8 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "State")
-	uint8 AmmoNumber = 2;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Firing")
+	int32 AmmoNumber = 2;
 
 	virtual void BeginPlay() override;
 

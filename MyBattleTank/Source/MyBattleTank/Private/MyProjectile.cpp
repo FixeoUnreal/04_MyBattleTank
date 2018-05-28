@@ -7,6 +7,7 @@
 #include "PhysicsEngine/RadialForceComponent.h"
 #include "Engine/World.h"
 #include "Public/TimerManager.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AMyProjectile::AMyProjectile()
@@ -31,8 +32,6 @@ AMyProjectile::AMyProjectile()
 
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
-
-	UE_LOG(LogTemp, Warning, TEXT("RootComp: %s"), *RootComponent->GetName());
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +58,15 @@ void AMyProjectile::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActo
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent(); 
+
+	UGameplayStatics::ApplyRadialDamage(
+		this,
+		ProjectileDamage,
+		GetActorLocation(),
+		ExplosionForce->Radius, // for consistency
+		UDamageType::StaticClass(),
+		TArray<AActor*>() // damage all actors
+	);
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyProjectile::OnTimerExpire, DestroyDelay, false);

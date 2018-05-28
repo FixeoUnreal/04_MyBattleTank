@@ -61,7 +61,6 @@ void UMyTankAimingComponent::Fire()
 	{
 		if (!ensure(Barrel)) { return; }
 		if(!ensure(ProjectileBlueprint)) { return; }
-		UE_LOG(LogTemp, Warning, TEXT("Fire possible!"));
 		// Spawn a projectile at the socket location from the barrel
 		FName SocketName = FName("Projectile");
 		auto Projectile = GetWorld()->SpawnActor<AMyProjectile>(

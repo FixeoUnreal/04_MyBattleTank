@@ -14,6 +14,11 @@ AMyTank::AMyTank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+float AMyTank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
+}
+
 float AMyTank::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
 {
 	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);

@@ -56,6 +56,10 @@ void AMyTankAIController::Tick(float DeltaTime)
 
 void AMyTankAIController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("AI Tank %s died"), *GetPawn()->GetName());
+	APawn* ControlledTank = GetPawn();
+	if (ControlledTank)
+	{
+		ControlledTank->DetachFromControllerPendingDestroy();
+	}
 }
 

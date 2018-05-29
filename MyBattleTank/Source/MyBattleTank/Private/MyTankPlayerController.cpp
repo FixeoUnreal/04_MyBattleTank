@@ -110,5 +110,5 @@ bool AMyTankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FV
 
 void AMyTankPlayerController::OnTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Player tank %s died"), *GetPawn()->GetName());
+	StartSpectatingOnly();
 }

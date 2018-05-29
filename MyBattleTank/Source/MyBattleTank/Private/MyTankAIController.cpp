@@ -3,7 +3,25 @@
 #include "MyBattleTank/Public/MyTankAIController.h"
 #include "Engine/World.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
+#include "MyBattleTank/Public/MyTank.h"
 
+
+void AMyTankAIController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<AMyTank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		AMyTank* ControlledTank = Cast<AMyTank>(GetPawn());
+		if (ControlledTank)
+		{
+			ControlledTank->TankDeath.AddUniqueDynamic(this, &AMyTankAIController::OnTankDeath);
+		}
+	}
+}
 
 void AMyTankAIController::BeginPlay()
 {
@@ -34,5 +52,10 @@ void AMyTankAIController::Tick(float DeltaTime)
 			ControlledAimComp->Fire(); // TPDP don't fire every frame
 		}
 	}
+}
+
+void AMyTankAIController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("AI Tank %s died"), *GetPawn()->GetName());
 }
 

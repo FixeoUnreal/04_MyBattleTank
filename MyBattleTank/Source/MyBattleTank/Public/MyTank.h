@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "MyTank.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTankDelegate);
+
 UCLASS()
 class MYBATTLETANK_API AMyTank : public APawn
 {
@@ -17,6 +19,8 @@ public:
 	float GetHealthPercent() const;
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
+
+	FTankDelegate TankDeath;
 
 private:
 	// Sets default values for this pawn's properties

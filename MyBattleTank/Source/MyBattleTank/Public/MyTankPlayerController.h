@@ -21,7 +21,7 @@ protected:
 	void FoundAimingComponent(UMyTankAimingComponent* AimCompRed);
 	
 private:
-	
+	virtual void SetPawn(APawn* InPawn) override;
 
 	virtual void BeginPlay() override;
 
@@ -36,6 +36,9 @@ private:
 	bool GetLookDirection(FVector2D &ScreenLocation, FVector& LookDirection) const;
 
 	bool GetLookVectorHitLocation(FVector LookDirection, FVector & HitLocation) const;
+
+	UFUNCTION()
+	void OnTankDeath();
 
 	UPROPERTY(EditDefaultsOnly)
 	float CrosshairXLocation = 0.5f;

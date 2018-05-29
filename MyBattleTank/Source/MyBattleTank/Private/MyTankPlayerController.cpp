@@ -4,10 +4,28 @@
 #include "MyBattleTank/Public/MyTankPlayerController.h"
 #include "Engine/World.h"
 #include "MyBattleTank/Public/MyTankAimingComponent.h"
+#include "MyBattleTank/Public/MyTank.h"
 
 
 #define OUT
 
+
+void AMyTankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<AMyTank>(InPawn);
+		if (!ensure(PossessedTank)) { return; }
+
+		// Subscribe our local method to the tank's death event
+		AMyTank* ControlledTank = Cast<AMyTank>(GetPawn());
+		if (ControlledTank)
+		{
+			ControlledTank->TankDeath.AddUniqueDynamic(this, &AMyTankPlayerController::OnTankDeath);
+		}
+	}
+}
 
 void AMyTankPlayerController::BeginPlay()
 {
@@ -88,4 +106,9 @@ bool AMyTankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FV
 
 	HitLocation = FVector(0);
 	return false; // Line-trace didn't succeed
+}
+
+void AMyTankPlayerController::OnTankDeath()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Player tank %s died"), *GetPawn()->GetName());
 }

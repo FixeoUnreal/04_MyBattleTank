@@ -12,7 +12,7 @@ void AMyTankAIController::SetPawn(APawn* InPawn)
 	if (InPawn)
 	{
 		auto PossessedTank = Cast<AMyTank>(InPawn);
-		if (!ensure(PossessedTank)) { return; }
+		if (!PossessedTank) { return; }
 
 		// Subscribe our local method to the tank's death event
 		AMyTank* ControlledTank = Cast<AMyTank>(GetPawn());
@@ -38,7 +38,7 @@ void AMyTankAIController::Tick(float DeltaTime)
 
 	if (!ensure(ControlledAimComp)) { return; }
 	
-	if (ensure(PLayerTank && ControlledTank))
+	if (PLayerTank && ControlledTank)
 	{
 		// Move towards player
 		MoveToActor(PLayerTank, AcceptanceRadius); // TODO check acceptance radius

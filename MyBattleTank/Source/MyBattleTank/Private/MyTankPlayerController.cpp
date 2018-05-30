@@ -97,7 +97,7 @@ bool AMyTankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FV
 		OUT HitResult,
 		StartLocation,
 		EndLocation,
-		ECollisionChannel::ECC_Visibility
+		ECollisionChannel::ECC_Camera
 	))
 	{
 		HitLocation = HitResult.Location;

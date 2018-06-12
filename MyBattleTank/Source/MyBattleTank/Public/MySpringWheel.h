@@ -29,7 +29,7 @@ protected:
 	UStaticMeshComponent* Wheel = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPhysicsConstraintComponent* PhysicsConstraint = nullptr;
+	UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
 
 public:	
 	// Called every frame

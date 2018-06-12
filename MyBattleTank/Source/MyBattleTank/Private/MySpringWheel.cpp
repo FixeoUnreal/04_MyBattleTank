@@ -14,13 +14,8 @@ AMySpringWheel::AMySpringWheel()
 	MassWheelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("Physics Constraint"));
 	SetRootComponent(MassWheelConstraint);
 
-	Mass = CreateAbstractDefaultSubobject<UStaticMeshComponent>(FName("Mass"));
-	Mass->SetupAttachment(MassWheelConstraint);
-
 	Wheel = CreateAbstractDefaultSubobject<UStaticMeshComponent>(FName("Wheel"));
 	Wheel->SetupAttachment(MassWheelConstraint);
-
-	
 }
 
 // Called when the game starts or when spawned
@@ -28,14 +23,20 @@ void AMySpringWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	if (GetAttachParentActor())
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Not null: %s"), *GetAttachParentActor()->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Null"));
-	}
+	SetupConstraint();
+}
+
+void AMySpringWheel::SetupConstraint()
+{
+	if (!GetAttachParentActor()) { return; }
+	UPrimitiveComponent* BodyRoot = Cast<UPrimitiveComponent>(GetAttachParentActor()->GetRootComponent());
+	if (!BodyRoot) { return; }
+	MassWheelConstraint->SetConstrainedComponents(
+		BodyRoot,
+		NAME_None,
+		Wheel,
+		NAME_None
+	);
 }
 
 // Called every frame
@@ -44,4 +45,6 @@ void AMySpringWheel::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 }
+
+
 

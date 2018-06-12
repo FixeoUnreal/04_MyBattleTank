@@ -2,7 +2,7 @@
 
 #include "MySpawnPoint.h"
 #include "Engine/World.h"
-
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values for this component's properties
 UMySpawnPoint::UMySpawnPoint()
@@ -20,9 +20,10 @@ void UMySpawnPoint::BeginPlay()
 {
 	Super::BeginPlay();
 
-	AActor* NewActor = GetWorld()->SpawnActor<AActor>(SpawnClass);
+	AActor* NewActor = GetWorld()->SpawnActorDeferred<AActor>(SpawnClass, GetComponentTransform());
 	if (!NewActor) { return; }
-	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepRelativeTransform);
+	NewActor->AttachToComponent(this, FAttachmentTransformRules::KeepWorldTransform);
+	UGameplayStatics::FinishSpawningActor(NewActor, GetComponentTransform());
 }
 
 

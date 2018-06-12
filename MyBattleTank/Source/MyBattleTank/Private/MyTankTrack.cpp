@@ -3,6 +3,9 @@
 #include "MyBattleTank/Public/MyTankTrack.h"
 #include "Components/StaticMeshComponent.h"
 #include "Engine/World.h"
+#include "MySpringWheel.h"
+#include "Components/SceneComponent.h"
+#include "MySpawnPoint.h"
 
 
 
@@ -11,46 +14,40 @@ UMyTankTrack::UMyTankTrack()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UMyTankTrack::BeginPlay()
+TArray<AMySpringWheel*> UMyTankTrack::GetWheels() const
 {
-	Super::BeginPlay();
-	OnComponentHit.AddDynamic(this, &UMyTankTrack::OnHit);
-}
-
-void UMyTankTrack::ApplySidewaysForce()
-{
-	// Calculate the slippage speed
-	auto SlippageSpeed = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
-
-	// Work out the required acceleration this frame to correct
-	auto DeltaTime = GetWorld()->GetDeltaSeconds();
-	auto CorrectionAcceleration = -SlippageSpeed / DeltaTime * GetRightVector();
-
-	// Calculate and apply sideways force
-	UStaticMeshComponent* TankRoot = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
-	auto CorrectForce = (TankRoot->GetMass() * CorrectionAcceleration) / 2;
-	TankRoot->AddForce(CorrectForce);
-}
-
-void UMyTankTrack::OnHit(UPrimitiveComponent * HitComponent, AActor * OtherActor, UPrimitiveComponent * OtherComponent, FVector NormalImpulse, const FHitResult & Hit)
-{
-	DriveTrack();
-	ApplySidewaysForce();
-	CurrentThrottle = 0;
-}
-
-void UMyTankTrack::DriveTrack()
-{
-	auto ForceApplied = GetForwardVector() * CurrentThrottle * TrackMaxDrivingForce;
-	auto ForceLocation = GetComponentLocation();
-	auto TankRoot = Cast<UPrimitiveComponent>(GetOwner()->GetRootComponent());
-	if (ensure(TankRoot))
+	TArray<AMySpringWheel*> ResultArray;
+	TArray<USceneComponent*> Children;
+	GetChildrenComponents(true, Children);
+	TArray<AMySpringWheel*> Wheels;
+	for (USceneComponent* Child : Children)
 	{
-		TankRoot->AddForceAtLocation(ForceApplied, ForceLocation);
+		auto SpawnPointChild = Cast<UMySpawnPoint>(Child);
+		if(!SpawnPointChild){ continue; }
+
+		AActor* SpawnedChild = SpawnPointChild->GetSpawnedActor();
+		auto SpringWheel = Cast<AMySpringWheel>(SpawnedChild);
+
+		if (!SpringWheel) { continue; }
+		ResultArray.Add(SpringWheel);
+	}
+
+	return ResultArray;
+}
+
+void UMyTankTrack::DriveTrack(float CurrentThrottle)
+{
+	auto ForceApplied = CurrentThrottle * TrackMaxDrivingForce;
+	auto Wheels = GetWheels();
+	auto ForcePerWheel = ForceApplied / Wheels.Num();
+	for (AMySpringWheel* Wheel : Wheels)
+	{
+		Wheel->AddDrivingForce(ForcePerWheel);
 	}
 }
 
 void UMyTankTrack::SetThrottle(float Throttle)
 {
-	CurrentThrottle = FMath::Clamp<float>((CurrentThrottle + Throttle), -1, 1);
+	float ThrottleToSet = FMath::Clamp<float>(Throttle, -1, 1);
+	DriveTrack(ThrottleToSet);
 }

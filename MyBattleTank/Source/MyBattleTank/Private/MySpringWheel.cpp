@@ -59,5 +59,9 @@ void AMySpringWheel::Tick(float DeltaTime)
 
 }
 
+void AMySpringWheel::AddDrivingForce(float ForceMagnitude)
+{
+	Wheel->AddForce(Axle->GetForwardVector() * ForceMagnitude);
+}
 
 

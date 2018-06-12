@@ -8,6 +8,7 @@
 
 class UPhysicsConstraintComponent;
 class UStaticMeshComponent;
+class USphereComponent;
 
 UCLASS()
 class MYBATTLETANK_API AMySpringWheel : public AActor
@@ -23,10 +24,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UStaticMeshComponent* Wheel = nullptr;
+	USphereComponent* Axle = nullptr;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
-	UPhysicsConstraintComponent* MassWheelConstraint = nullptr;
+	USphereComponent* Wheel = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent* MassAxleConstraint = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UPhysicsConstraintComponent* AxleWheelConstraint = nullptr;
 
 public:	
 	// Called every frame

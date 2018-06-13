@@ -30,6 +30,7 @@ void AMyTankPlayerController::SetPawn(APawn* InPawn)
 void AMyTankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+	if (!GetPawn()) { return; }
 	auto AimingComponent = GetPawn()->FindComponentByClass<UMyTankAimingComponent>();
 	if(ensure(AimingComponent))
 	{

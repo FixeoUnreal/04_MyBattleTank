@@ -42,6 +42,12 @@ public:
 	void AddDrivingForce(float ForceMagnitude);
 
 private:
+	float TotalForceMagnitudeThisFrame = 0;
+
+	void ApplyForce();
+
 	void SetupConstraint();
 	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };
